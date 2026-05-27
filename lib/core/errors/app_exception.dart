@@ -19,11 +19,13 @@ class TimeoutException extends AppException {
 }
 
 class ServerException extends AppException {
-  const ServerException([super.message = 'Server error', super.statusCode]);
+  const ServerException([super.message = 'Server error', int? statusCode])
+      : super(statusCode: statusCode);
 }
 
 class AuthException extends AppException {
-  const AuthException([super.message = 'Authentication failed', super.statusCode]);
+  const AuthException([super.message = 'Authentication failed', int? statusCode])
+      : super(statusCode: statusCode);
 }
 
 class NotFoundException extends AppException {

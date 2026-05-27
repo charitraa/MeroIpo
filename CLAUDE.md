@@ -50,7 +50,13 @@ data (models, datasources, repository impls)
 2. **`Either<Failure, T>`** (dartz) is the return type of every repository method. The
    presentation layer must handle both `Left` and `Right`.
 3. **No business logic in widgets** — it lives in usecases or services.
-4. **Features never import from each other.** Share via `lib/shared/` or `lib/core/`.
+4. **Features never import each other's _presentation_ layer.** Share UI via
+   `lib/shared/` and `lib/core/`. Narrow exception: cross-cutting **domain**
+   orchestration may compose other features' domain contracts — e.g.
+   `ipo/.../bulk_apply_ipo_usecase.dart` uses `auth` + `accounts` domain, and
+   `core/services/auto_apply_service.dart` and the dashboard aggregate across
+   features. Never reach into another feature's `data/` or `presentation/`
+   internals for business logic.
 5. **No hardcoded strings** — use `lib/core/constants/`.
 6. **GoRouter for all navigation** — no direct `Navigator.push`. Route names in
    `route_names.dart`.
